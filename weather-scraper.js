@@ -8,14 +8,11 @@
         $("#summary").removeClass().addClass("alert").html("").hide();
         var city = $("#city").val();
         city = formatCity(city);
-        
 
         if (validateText(city)) {
             $.ajax({
+                // felparaméterezi az url-t a GET-hez
                 url: "weather-scraper.php?city=" + city,
-                // az ajax megcsinálja az URL encode-ot és decode-ot, így ékezetesek is jól működnek
-                // egyébként ékezetmentesíteni kell előtte a weather-forecast miatt, tehát mindegy is 
-
                 dataType: "json",
                 success: function (data) {
                     if (data.error) {
@@ -40,6 +37,9 @@
 function validateText(text) {
     return (text.trim() != "");
 }
+
+// szóközöket "-"-re cseréli, ékezetmentesít, kezdőbetűket nagyra cseréli, ilyen formában teszi bele az URL-be a GET-tel
+// weather-forecast ilyen formában teszi bele a saját GET kérésével az URL-be
 
 function formatCity(text) {
     text = text.trim().replace(/ /g, "-").toLowerCase();
